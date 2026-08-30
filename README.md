@@ -15,7 +15,7 @@
 - `pip install -r requirements.txt` - Установить зависимости
 - `py ./train.py` - Обучить модель
 - `uvicorn infer:app` - Запустить API модели
-- `config.py` - Изменить параметры, модель и т.д.
+- `config/config.py` - Изменить параметры, модель и т.д.
 
 ## Данные (датасет)
 Kinematics Motion Data - https://www.kaggle.com/datasets/yasserh/kinematics-motion-data/
