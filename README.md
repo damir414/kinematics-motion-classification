@@ -13,7 +13,7 @@
 
 ## Запуск
 - `pip install -r requirements.txt` - Установить зависимости
-- `py ./train.py` - Обучить модель
+- `python ./train.py` - Обучить модель
 - `uvicorn infer:app` - Запустить API модели
 - `config/config.py` - Изменить параметры, модель и т.д.
 
