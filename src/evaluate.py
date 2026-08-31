@@ -25,6 +25,7 @@ def run_evaluate(model, X_train, y_train, X_test, y_test, cv_splits):
     cv_scores = cross_validate(
         model, X_train, y_train,
         cv=cv_splits,
+        n_jobs=-1,
         scoring=['accuracy', 'precision_macro', 'recall_macro', 'f1_macro'],
         return_train_score=False,
     )
