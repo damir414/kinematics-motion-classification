@@ -1,5 +1,6 @@
 import joblib
 import numpy as np
+import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -16,6 +17,16 @@ class FeaturesData(BaseModel):
     gyro_z: float
 
 
+FEATURES = [
+    'wrist',
+    'acceleration_x',
+    'acceleration_y',
+    'acceleration_z',
+    'gyro_x',
+    'gyro_y',
+    'gyro_z',
+]
+
 cfg = Config()
 app = FastAPI()
 
@@ -27,8 +38,8 @@ model = joblib.load(model_path)
 # Api
 @app.post('/infer')
 def infer(data: FeaturesData):
-    features = np.array([
+    features = pd.DataFrame(np.array([
         data.wrist, data.acceleration_x, data.acceleration_y, data.acceleration_z, data.gyro_x, data.gyro_y, data.gyro_z
-    ]).reshape(1, -1)
+    ]).reshape(1, -1), columns=FEATURES)
     pred = model.predict(features)
     return {'activity': int(pred[0])}

@@ -1,5 +1,6 @@
-from sklearn.base import BaseEstimator, ClassifierMixin
+import pandas as pd
 
+from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
@@ -12,33 +13,37 @@ from catboost import CatBoostClassifier
 class NaiveClassifier(BaseEstimator, ClassifierMixin):
     '''Если ускорение по оси Y больше 0 - значит бег'''
     def fit(self, X, y=None):
+        self.is_fitted_ = True # используемый в sklearn флаг
         return self
 
     def predict(self, X):
-        return (X['acceleration_y'] > 0).astype(int)
+        if isinstance(X, pd.DataFrame):
+            return (X['acceleration_y'] > 0).astype(int)
+        else:
+            return (X[:, 2] > 0).astype(int)
 
 
 def get_model_dict(random_state):
     return {
-        "naive": NaiveClassifier(),
-        "linear": LogisticRegression(),
-        "knn": KNeighborsClassifier(),
-        "svm": SVC(random_state=random_state),
-        "random_forest": RandomForestClassifier(
+        'naive': NaiveClassifier(),
+        'linear': LogisticRegression(),
+        'knn': KNeighborsClassifier(),
+        'svm': SVC(random_state=random_state),
+        'random_forest': RandomForestClassifier(
             random_state=random_state,
             n_jobs=-1,
         ),
-        "xgboost": XGBClassifier(
+        'xgboost': XGBClassifier(
             random_state=random_state,
             verbosity=0,
             n_jobs=-1,
         ),
-        "lightgbm": LGBMClassifier(
+        'lightgbm': LGBMClassifier(
             random_state=random_state,
             verbosity=-1,
             n_jobs=-1,
         ),
-        "catboost": CatBoostClassifier(
+        'catboost': CatBoostClassifier(
             random_state=random_state,
             verbose=0,
             thread_count=-1,
