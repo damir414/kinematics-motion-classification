@@ -10,12 +10,14 @@
 - `notebook/` - Эксперименты (сравнение моделей, оценка значимости признаков и т.д.)
 - `data/` - Данные для обучения
 - `model/` - Сохраненные модели
+- `tests/` - Тесты
 
 ## Запуск
 - `pip install -r requirements.txt` - Установить зависимости
 - `python ./train.py` - Обучить модель
 - `uvicorn infer:app` - Запустить API модели
 - `config/config.py` - Изменить параметры, модель и т.д.
+- `pytest tests` - Запустить тесты
 
 ## Данные (датасет)
 Kinematics Motion Data - https://www.kaggle.com/datasets/yasserh/kinematics-motion-data/
